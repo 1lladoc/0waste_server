@@ -1,5 +1,5 @@
 <?php
-include 'conn.php';
+include '../conn.php';
 header("Content-Type: application/json; charset=UTF-8");
 //$inputJSON = file_get_contents('php://input');
 $inputJSON = '{
@@ -16,12 +16,20 @@ $stmt->bind_param("ss", $input->email, $input->password);
 $stmt->execute();
 $stmt->bind_result($id, $type);
 $tmp = array();
-while ($stmt->fetch()) {
+
+while($stmt->fetch()) {
     $tmp["id"] = $id;
     $tmp["type"] = $type;
     array_push($output, $tmp);
 }
 
-$json = json_encode($output);
-echo $json;
+if(empty($output)){
+    $tmp["status"] = 0;
+    $tmp["message"] = "No Data";
+    array_push($output, $tmp);
+    echo json_encode($output);
+}else{
+    echo json_encode($output);
+}
+
 ?>
