@@ -50,4 +50,6 @@ if(empty($output)){
     echo json_encode($output);
 }
 
+$stmt->close();
+$conn->close();
 ?>
