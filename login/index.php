@@ -4,40 +4,34 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 include '../conn.php';
 
-// if (strtoupper($_SERVER['REQUEST_METHOD']) != 'POST'){
-//     echo '{"POST": "NOT OK"}';
-// }else{
-//     echo '{"POST": "OK"}';
-// } 
 $inputJSON = file_get_contents('php://input');
 
-// $inputJSON = '{
-//     "email": "admin@menro.com",
-//     "password": "admin123"
+// $inputJSON = '
+// {
+//     "emailNumber" : "09187654321",
+//     "password" : "admin123"
 // }';
-
-//echo $inputJSON;
 
 $input = json_decode($inputJSON, FALSE); //convert JSON into array
 
-// echo '{
-//     "email": '.$input->email.',
-//     "password": '.$input->password.'
-// }';
-
 $output = array();
 
-$stmt = $conn->prepare("SELECT id, name, TYPE FROM users WHERE email = ? AND password = MD5(?);");
-$stmt->bind_param("ss", $input->email, $input->password);
+$stmt = $conn->prepare("SELECT id, name, usertype, email, mobile FROM users WHERE (email = ? OR mobile = ?) AND password = MD5(?);");
+$stmt->bind_param("sss",
+    $input->emailNumber,
+    $input->emailNumber,
+    $input->password
+);
 $stmt->execute();
-$stmt->bind_result($id, $name, $type);
+$stmt->bind_result($id, $name, $type, $email, $mobile);
 $tmp = array();
 
 while($stmt->fetch()) {
     // $tmp["id"] = $id;
     // $tmp["type"] = $type;
     // array_push($output, $tmp);
-    $output = array("id" => $id,"name" => $name, "type" => $type);
+    $data = array("id" => $id,"name" => $name, "type" => $type, "email" => $email, "mobile" => $mobile);
+    $output = array("status" => 200, "message" => "Success", "data" => array($data));
 }
 //$output = array("result" => $output);
 if(empty($output)){
