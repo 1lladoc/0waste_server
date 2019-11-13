@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Host:                         localhost
+-- Host:                         127.0.0.1
 -- Server version:               10.3.16-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
 -- HeidiSQL Version:             10.2.0.5599
@@ -19,12 +19,13 @@ USE `zerowaste`;
 -- Dumping structure for table zerowaste.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `email` text NOT NULL,
+  `email` text DEFAULT NULL,
   `password` text NOT NULL,
   `name` text NOT NULL,
-  `type` int(1) NOT NULL DEFAULT 0,
+  `mobile` varchar(11) NOT NULL,
+  `usertype` int(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
