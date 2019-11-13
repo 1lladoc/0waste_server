@@ -4,13 +4,13 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 include '../conn.php';
 
-$inputJSON = file_get_contents('php://input');
+// $inputJSON = file_get_contents('php://input');
 
-// $inputJSON = '
-// {
-//     "emailNumber" : "09187654321",
-//     "password" : "admin123"
-// }';
+$inputJSON = '
+{
+    "emailNumber" : "09187654321",
+    "password" : "admin123"
+}';
 
 $input = json_decode($inputJSON, FALSE); //convert JSON into array
 
