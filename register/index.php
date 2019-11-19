@@ -9,13 +9,15 @@ $input = json_decode($inputJSON);
 
 $output = array();
 
-$stmt = $conn->prepare("INSERT INTO users VALUES(NULL,?,MD5(?),?,?,?);");
-$stmt->bind_param("ssssi",
+$stmt = $conn->prepare("INSERT INTO users VALUES(NULL,?,MD5(?),?,?,?,?,?);");
+$stmt->bind_param("ssssidd",
     $input->email,
     $input->password,
     $input->name,
     $input->number,
-    $input->usertype
+    $input->usertype,
+    $input->latitude,
+    $input->longitude
 );
 
 if(!$stmt->execute()){
