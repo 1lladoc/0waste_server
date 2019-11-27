@@ -8,12 +8,13 @@ $output = array();
 
 $junkshop = 2;
 
-$stmt = $conn->prepare("SELECT users.id, users.name, users.mobile, users.usertype, users.longitude, users.latitude, avg(reports.rating) 
+$stmt = $conn->prepare("SELECT users.id, users.name, users.mobile, users.usertype, users.longitude, users.latitude, 
+avg(reports.rating) AS rating, COUNT(reports.rating) AS raters 
 FROM users LEFT OUTER JOIN reports ON users.id <=> reports.user_id WHERE  users.usertype = $junkshop GROUP BY users.id;");
 
 $stmt->execute();
 
-$stmt->bind_result($id, $name, $mobile, $usertype, $longitude, $latitude, $rating);
+$stmt->bind_result($id, $name, $mobile, $usertype, $longitude, $latitude, $rating, $raters);
 
 $tmp = array();
 $data = array();
@@ -31,6 +32,8 @@ while($stmt->fetch()) {
     }else{
         $tmp["rating"] = $rating;
     }
+
+    $tmp["raters"] = $raters;
     
     array_push($data, $tmp);
 }
