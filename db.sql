@@ -62,9 +62,9 @@ CREATE TABLE IF NOT EXISTS `reports` (
   PRIMARY KEY (`id`),
   KEY `FK_reports_users` (`user_id`),
   CONSTRAINT `FK_reports_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table zerowaste.reports: ~0 rows (approximately)
+-- Dumping data for table zerowaste.reports: ~4 rows (approximately)
 /*!40000 ALTER TABLE `reports` DISABLE KEYS */;
 INSERT INTO `reports` (`id`, `user_id`, `rating`, `comment`) VALUES
 	(1, 0000000024, 4, NULL),
@@ -72,6 +72,19 @@ INSERT INTO `reports` (`id`, `user_id`, `rating`, `comment`) VALUES
 	(3, 0000000024, 5, NULL),
 	(4, 0000000024, 5, NULL);
 /*!40000 ALTER TABLE `reports` ENABLE KEYS */;
+
+-- Dumping structure for table zerowaste.schedule
+CREATE TABLE IF NOT EXISTS `schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `datetime` datetime DEFAULT NULL,
+  `status` int(1) NOT NULL,
+  `notice` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table zerowaste.schedule: ~0 rows (approximately)
+/*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 
 -- Dumping structure for table zerowaste.sub_broadcast_type
 CREATE TABLE IF NOT EXISTS `sub_broadcast_type` (
@@ -112,9 +125,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `latitude` double DEFAULT NULL,
   `longitude` double DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `mobile` (`mobile`),
   KEY `FK_users_usertype` (`usertype`),
   CONSTRAINT `FK_users_usertype` FOREIGN KEY (`usertype`) REFERENCES `usertype` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table zerowaste.users: ~7 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
@@ -125,7 +139,8 @@ INSERT INTO `users` (`id`, `email`, `password`, `name`, `mobile`, `usertype`, `l
 	(0000000026, '', 'd27d320c27c3033b7883347d8beca317', 'Test Junkshop3', '33333333333', 2, 10.1916611, 122.851362),
 	(0000000027, '', 'b857eed5c9405c1f2b98048aae506792', 'Test Junkshop4', '44444444444', 2, 10.1783426, 122.856619),
 	(0000000028, '', 'f638f4354ff089323d1a5f78fd8f63ca', 'TEST 5', '55555555555', 2, 10.191198828339088, 122.85113241523504),
-	(0000000029, '', '7c497868c9e6d3e4cf2e87396372cd3b', 'TEST 6', '66666666669', 2, 10.181208003320508, 122.85632818937303);
+	(0000000029, '', '7c497868c9e6d3e4cf2e87396372cd3b', 'TEST 6', '66666666669', 2, 10.181208003320508, 122.85632818937303),
+	(0000000030, 'admin@menro.com', '0192023a7bbd73250516f069df18b500', 'Melanie B', '09388085300', 1, 10.1733287, 122.8558754);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table zerowaste.usertype
