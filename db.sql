@@ -22,14 +22,15 @@ CREATE TABLE IF NOT EXISTS `broadcast_type` (
   `title` text DEFAULT NULL,
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table zerowaste.broadcast_type: ~2 rows (approximately)
+-- Dumping data for table zerowaste.broadcast_type: ~4 rows (approximately)
 /*!40000 ALTER TABLE `broadcast_type` DISABLE KEYS */;
 INSERT INTO `broadcast_type` (`id`, `title`, `description`) VALUES
-	(1, 'Recyclable', 'Location'),
-	(2, 'Waste', 'Location'),
-	(3, 'Location', 'Location');
+	(1, 'Recyclable', 'Recyclable materials'),
+	(2, 'Waste', 'Waste for disposal, garbage pickup'),
+	(3, 'Exchange', 'Exchange to stores'),
+	(4, 'Location', 'Location');
 /*!40000 ALTER TABLE `broadcast_type` ENABLE KEYS */;
 
 -- Dumping structure for table zerowaste.record
@@ -47,10 +48,12 @@ CREATE TABLE IF NOT EXISTS `record` (
   PRIMARY KEY (`id`),
   KEY `FK_record_users` (`user_id`),
   CONSTRAINT `FK_record_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table zerowaste.record: ~0 rows (approximately)
+-- Dumping data for table zerowaste.record: ~1 rows (approximately)
 /*!40000 ALTER TABLE `record` DISABLE KEYS */;
+INSERT INTO `record` (`id`, `user_id`, `broadcast_type`, `sub_broadcast_type`, `quantity`, `unit_of_measure`, `latitude`, `longitude`, `date_time`, `status`) VALUES
+	(0000000001, 0000000030, 1, 1, 0, 1, 10.5, 10.5, '2019-12-13 13:46:46', 1);
 /*!40000 ALTER TABLE `record` ENABLE KEYS */;
 
 -- Dumping structure for table zerowaste.reports
@@ -128,19 +131,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `mobile` (`mobile`),
   KEY `FK_users_usertype` (`usertype`),
   CONSTRAINT `FK_users_usertype` FOREIGN KEY (`usertype`) REFERENCES `usertype` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
--- Dumping data for table zerowaste.users: ~7 rows (approximately)
+-- Dumping data for table zerowaste.users: ~9 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `email`, `password`, `name`, `mobile`, `usertype`, `latitude`, `longitude`) VALUES
-	(0000000003, 'admin@menro.com', '0192023a7bbd73250516f069df18b500', 'Melanie', '09187654321', 1, 0, 0),
+	(0000000003, 'admin@menro.com', '0192023a7bbd73250516f069df18b500', 'Melanie', '09187654321', 10, 0, 0),
 	(0000000024, '', '1bbd886460827015e5d605ed44252251', 'Test Junkshop1', '11111111111', 2, 10.1916769, 122.851643),
 	(0000000025, '', 'bae5e3208a3c700e3db642b6631e95b9', 'Test Junkshop2', '22222222222', 2, 10.1914034, 122.851936),
 	(0000000026, '', 'd27d320c27c3033b7883347d8beca317', 'Test Junkshop3', '33333333333', 2, 10.1916611, 122.851362),
 	(0000000027, '', 'b857eed5c9405c1f2b98048aae506792', 'Test Junkshop4', '44444444444', 2, 10.1783426, 122.856619),
 	(0000000028, '', 'f638f4354ff089323d1a5f78fd8f63ca', 'TEST 5', '55555555555', 2, 10.191198828339088, 122.85113241523504),
 	(0000000029, '', '7c497868c9e6d3e4cf2e87396372cd3b', 'TEST 6', '66666666669', 2, 10.181208003320508, 122.85632818937303),
-	(0000000030, 'admin@menro.com', '0192023a7bbd73250516f069df18b500', 'Melanie B', '09388085300', 1, 10.1733287, 122.8558754);
+	(0000000030, 'admin123@menro.com', '0192023a7bbd73250516f069df18b500', 'Melanie B', '09388085300', 1, 10.1733287, 122.8558754);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table zerowaste.usertype
@@ -149,13 +152,14 @@ CREATE TABLE IF NOT EXISTS `usertype` (
   `title` text DEFAULT NULL,
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table zerowaste.usertype: ~2 rows (approximately)
+-- Dumping data for table zerowaste.usertype: ~3 rows (approximately)
 /*!40000 ALTER TABLE `usertype` DISABLE KEYS */;
 INSERT INTO `usertype` (`id`, `title`, `description`) VALUES
 	(1, 'Residential', 'Residential'),
-	(2, 'Junkshop', 'Junk Shop');
+	(2, 'Junkshop', 'Junk Shop'),
+	(10, 'Admin', 'Admin');
 /*!40000 ALTER TABLE `usertype` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
